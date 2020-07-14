@@ -13,7 +13,7 @@ Install and update using pip:
 ## Getting Started
 ### 1. Text preprocessing
    
-+ **Clean**
++ **Clean text**
 
 ```
 from textgo import Preprocess
@@ -33,25 +33,24 @@ texts2 = ["<text>Natural Language Processing, usually shortened as NLP, is a bra
 ptexts2 = [tp2.clean(text) for text in texts2]
 print(ptexts2)
 ```
-Output:    
-```['natural language processing usually shortened as nlp is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language']```
+Output: `['natural language processing usually shortened as nlp is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language']`
 
-+ **Tokenize**
++ **Tokenize and drop stopwords**
 ```
 # Chinese
-tokens1 = [tp1.tokenize(ptext) for ptext in ptexts1]
+tokens1 = tp1.tokenize(ptexts1)
 print(tokens1)
 ```
-```[['自然语言', '处理', '是', '计算机科学', '领域', '与', '人工智能', '领域', '中', '的', '一个', '重要', '方向'], ['文本', '预处理', '其实', '很', '简单']]```
+Output:`[['自然语言', '处理', '计算机科学', '领域', '人工智能', '领域', '中', '重要', '方向'], ['文本', '预处理', '其实', '很', '简单']]`
 
 ```
 # English
-tokens2 = [tp2.tokenize(ptext) for ptext in ptexts2]
+tokens2 = tp2.tokenize(ptexts2)
 print(tokens2)
 ```
-```[['natural', 'language', 'processing', 'usually', 'shortened', 'as', 'nlp', 'is', 'a', 'branch', 'of', 'artificial', 'intelligence', 'that', 'deals', 'with', 'the', 'interaction', 'between', 'computers', 'and', 'humans', 'using', 'the', 'natural', 'language']]```
+Output:`[['natural', 'language', 'processing', 'usually', 'shortened', 'nlp', 'branch', 'artificial', 'intelligence', 'deals', 'interaction', 'computers', 'humans', 'using', 'natural', 'language']]`
 
-* Preprocess (Clean + Tokenize + Remove stopwords)
++ **Preprocess (Clean + Tokenize + Remove stopwords + Join words)**
 ```
 # Chinese
 ptexts1 = tp1.preprocess(texts1)
@@ -66,7 +65,7 @@ print(ptexts2)
 ```
 ```['natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']```
 
-**2. Text representation**
+### 2. Text representation
 ```
 from textgo import Embeddings
 petxts = ['自然语言 处理 计算机科学 领域 人工智能 领域 中 重要 方向', '文本 预处理 其实 很 简单']
@@ -106,7 +105,7 @@ bert_emb1 = emb.bert(ptexts1)
 bert_emb2 = emb.bert(ptexts2)
 ```
 
-**3. Similarity calculation**   
+### 3. Similarity calculation
 
 Support calculating similarity/distance between texts based on text representation mentioned above. For example, we can use bert sentence embeddings to compute cosine similarity between two sentences one by one.
 ```
@@ -119,7 +118,7 @@ sim = ts.similarity(texts1, texts2, mutual=False)
 print(sim)
 ```   
 
-```[0.9143135, 0.7350756]```   
+Output:`[0.9143135, 0.7350756]`
 
 Besides, we can also calculate similarity between each sentences among two datasets by setting mutual=True.
 ```
@@ -127,12 +126,12 @@ sim = ts.similarity(texts1, texts2, mutual=True)
 print(sim)
 ```
 
-```
+Output:`
 array([[0.9143138 , 0.772496  ],
        [0.704296  , 0.73507595]], dtype=float32)
-```
+`
        
-**4. Text search**   
+### 4. Text search
 
-**5. Text classification**
+### 5. Text classification
   
