@@ -1,9 +1,10 @@
 # TextGo
-TextGo is a python package to help you work with text data conveniently and efficiently. It's a powerful NLP tool, which provides various apis including text preprocessing, representation, similarity calculation, text search and classification. Besides, it supports both English and Chinese language.
+*TextGo* is a python package to help you work with text data conveniently and efficiently. It's a powerful NLP tool, which provides various apis including text preprocessing, representation, similarity calculation, text search and classification. Besides, it supports both English and Chinese language.
 
 ## Highlights
+* Support both English and Chinese languages in text preprocessing
 * Provide various text representation algorithms including BOW, TF-IDF, LDA, LSA, PCA, Word2Vec/GloVe/FastText, BERT...
-* Support fast text search based on Faiss
+* Support fast text search based on [Faiss](https://github.com/facebookresearch/faiss)
 * Support various text classification algorithms including FastText, XGBoost, BERT
 
 ## Installing
@@ -201,6 +202,7 @@ X = tp.preprocess(X)
 
 # get features
 from textgo import Embeddings
+import numpy as np
 emb = Embeddings()
 tfidf_emb = emb.tfidf(X)
 lda_emb = emb.lda(X, dim=10)
@@ -253,3 +255,4 @@ classification_report, acc, loss = bert.evaluate(X_test, y_test, model=model, to
 predpro, predclass = bert.predict(X_test, model=model, tokenizer=tokenizer, batch_size=args['batch_size'],max_len=args['max_len'],num_labels=args['num_labels'])
 ```
 
+## Getting Started
