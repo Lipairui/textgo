@@ -22,9 +22,7 @@ texts1 = ["<text>自然语言处理是计算机科学领域与人工智能领域
 ptexts1 = [tp1.clean(text) for text in texts1]
 print(ptexts1)
 ```
-
 ```['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']```
-
 
 ```
 # English
@@ -36,6 +34,20 @@ print(ptexts2)
 ```['natural language processing usually shortened as nlp is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language']```
 
 * Tokenize
+```
+# Chinese
+tokens1 = [tp1.tokenize(ptext) for ptext in ptexts1]
+print(tokens1)
+```
+```[['自然语言', '处理', '是', '计算机科学', '领域', '与', '人工智能', '领域', '中', '的', '一个', '重要', '方向'], ['文本', '预处理', '其实', '很', '简单']]```
+
+```
+# English
+tokens2 = [tp2.tokenize(ptext) for ptext in ptexts2]
+print(tokens2)
+```
+```[['natural', 'language', 'processing', 'usually', 'shortened', 'as', 'nlp', 'is', 'a', 'branch', 'of', 'artificial', 'intelligence', 'that', 'deals', 'with', 'the', 'interaction', 'between', 'computers', 'and', 'humans', 'using', 'the', 'natural', 'language']]```
+
 * Preprocess (Clean + Tokenize + Remove stopwords)
 
 **2. Text representation**
