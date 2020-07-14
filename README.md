@@ -41,14 +41,14 @@ Output: `['natural language processing usually shortened as nlp is a branch of a
 tokens1 = tp1.tokenize(ptexts1)
 print(tokens1)
 ```
-Output:`[['自然语言', '处理', '计算机科学', '领域', '人工智能', '领域', '中', '重要', '方向'], ['文本', '预处理', '其实', '很', '简单']]`
+Output: `[['自然语言', '处理', '计算机科学', '领域', '人工智能', '领域', '中', '重要', '方向'], ['文本', '预处理', '其实', '很', '简单']]`
 
 ```
 # English
 tokens2 = tp2.tokenize(ptexts2)
 print(tokens2)
 ```
-Output:`[['natural', 'language', 'processing', 'usually', 'shortened', 'nlp', 'branch', 'artificial', 'intelligence', 'deals', 'interaction', 'computers', 'humans', 'using', 'natural', 'language']]`
+Output: `[['natural', 'language', 'processing', 'usually', 'shortened', 'nlp', 'branch', 'artificial', 'intelligence', 'deals', 'interaction', 'computers', 'humans', 'using', 'natural', 'language']]`
 
 + **Preprocess (Clean + Tokenize + Remove stopwords + Join words)**
 ```
@@ -56,14 +56,14 @@ Output:`[['natural', 'language', 'processing', 'usually', 'shortened', 'nlp', 'b
 ptexts1 = tp1.preprocess(texts1)
 print(ptexts1)
 ```
-```['自然语言 处理 计算机科学 领域 人工智能 领域 中 重要 方向', '文本 预处理 其实 很 简单']```
+Output: `['自然语言 处理 计算机科学 领域 人工智能 领域 中 重要 方向', '文本 预处理 其实 很 简单']`
 
 ```
 # English
 ptexts2 = tp2.preprocess(texts2)
 print(ptexts2)
 ```
-```['natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']```
+Output: `['natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']`
 
 ### 2. Text representation
 ```
@@ -118,7 +118,7 @@ sim = ts.similarity(texts1, texts2, mutual=False)
 print(sim)
 ```   
 
-Output:`[0.9143135, 0.7350756]`
+Output: `[0.9143135, 0.7350756]`
 
 Besides, we can also calculate similarity between each sentences among two datasets by setting mutual=True.
 ```
@@ -126,7 +126,7 @@ sim = ts.similarity(texts1, texts2, mutual=True)
 print(sim)
 ```
 
-Output:`
+Output: `
 array([[0.9143138 , 0.772496  ],
        [0.704296  , 0.73507595]], dtype=float32)
 `
