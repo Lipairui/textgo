@@ -22,7 +22,9 @@ texts1 = ["<text>自然语言处理是计算机科学领域与人工智能领域
 ptexts1 = [tp1.clean(text) for text in texts1]
 print(ptexts1)
 ```
-```['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']```
+Output:
+```
+ ['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']```
 
 ```
 # English
@@ -118,7 +120,7 @@ print(sim)
 
 ```[0.9143135, 0.7350756]```   
 
-Besides, we can also calculate similarity between each sentences of among two datasets by setting mutual=True.
+Besides, we can also calculate similarity between each sentences among two datasets by setting mutual=True.
 ```
 sim = ts.similarity(texts1, texts2, mutual=True)
 print(sim)
