@@ -103,7 +103,8 @@ bert_emb1 = emb.bert(ptexts1)
 bert_emb2 = emb.bert(ptexts2)
 ```
 
-**3. Similarity calculation**
+**3. Similarity calculation**   
+
 Support calculating similarity/distance between texts based on text representation mentioned above. For example, we can use bert sentence embeddings to compute cosine similarity between two sentences one by one.
 ```
 from textgo import TextSim
@@ -113,15 +114,21 @@ texts2 = ["她变得越来越不开心了。","近来总是风雨交加没法外
 ts = TextSim(lang='zh', method='bert', model_path='model/bert-base-chinese')
 sim = ts.similarity(texts1, texts2, mutual=False)
 print(sim)
-```
-```[0.9143135, 0.7350756]```
+```   
+
+```[0.9143135, 0.7350756]```   
+
 Besides, we can also calculate similarity between each sentences of among two datasets by setting mutual=True.
 ```
 sim = ts.similarity(texts1, texts2, mutual=True)
 print(sim)
 ```
-```array([[0.9143138 , 0.772496  ],
-       [0.704296  , 0.73507595]], dtype=float32)```
+
+```
+array([[0.9143138 , 0.772496  ],
+       [0.704296  , 0.73507595]], dtype=float32)
+```
+       
 **4. Text search**   
 
 **5. Text classification**
