@@ -11,7 +11,7 @@
 Install and update using pip:      
 `pip install textgo`
 
-Tips: fasttext package needs to be installed manually as follows:
+Tips: the fasttext package needs to be installed manually as follows:
 
 ```
 git clone https://github.com/facebookresearch/fastText.git
