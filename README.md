@@ -3,5 +3,5 @@ TextGo is a python package to help you work with text data conveniently and effi
 
 ## Installing
 Install and update using pip:
-  pip install textgo
+`pip install textgo`
   
