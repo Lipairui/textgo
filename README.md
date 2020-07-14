@@ -18,7 +18,10 @@ Install and update using pip:
 * Preprocess (Clean + Tokenize + Remove stopwords)
 
 **2. Text representation**
+
 **3. Similarity calculation**
-**4. Text search**
+
+**4. Text search**   
+
 **5. Text classification**
   
