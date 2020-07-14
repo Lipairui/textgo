@@ -11,5 +11,5 @@ Install and update using pip:
 `pip install textgo`
 
 ## Getting Started
-1. Text preprocessing
+*1. Text preprocessing*
   
