@@ -11,5 +11,14 @@ Install and update using pip:
 `pip install textgo`
 
 ## Getting Started
-*1. Text preprocessing*
+**1. Text preprocessing**
+   
+* Clean
+* Tokenize
+* Preprocess (Clean + Tokenize + Remove stopwords)
+
+**2. Text representation**
+**3. Similarity calculation**
+**4. Text search**
+**5. Text classification**
   
