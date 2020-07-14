@@ -22,6 +22,7 @@ texts1 = ["<text>自然语言处理是计算机科学领域与人工智能领域
 ptexts1 = [tp1.clean(text) for text in texts1]
 print(ptexts1)
 ```
+
 Output:
 ```
  ['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']```
