@@ -13,7 +13,7 @@ Install and update using pip:
 ## Getting Started
 ### 1. Text preprocessing
    
-+ **Clean text**
+**Clean text**
 
 ```
 from textgo import Preprocess
@@ -35,7 +35,7 @@ print(ptexts2)
 ```
 Output: `['natural language processing usually shortened as nlp is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language']`
 
-+ **Tokenize and drop stopwords**
+**Tokenize and drop stopwords**
 ```
 # Chinese
 tokens1 = tp1.tokenize(ptexts1)
@@ -50,7 +50,7 @@ print(tokens2)
 ```
 Output: `[['natural', 'language', 'processing', 'usually', 'shortened', 'nlp', 'branch', 'artificial', 'intelligence', 'deals', 'interaction', 'computers', 'humans', 'using', 'natural', 'language']]`
 
-+ **Preprocess (Clean + Tokenize + Remove stopwords + Join words)**
+**Preprocess (Clean + Tokenize + Remove stopwords + Join words)**
 ```
 # Chinese
 ptexts1 = tp1.preprocess(texts1)
@@ -142,14 +142,14 @@ texts2 = ["Some men are playing a sport.", "A man is driving down a lonely road.
 ts = TextSim(lang='en', method='word2vec', model_path='model/word2vec.bin')
 ```
 
-+ **Normal search**
+**Normal search**
 ```
 res = ts.get_similar_res(texts1, texts2, metric='cosine', threshold=0.5, topn=2)
 print(res)
 ```
 Output: `[[(0, 'Some men are playing a sport.', 0.828474), (1, 'A man is driving down a lonely road.', 0.60927737)]]`
 
-+ **Fast search**
+**Fast search**
 ```
 ts.build_index(texts2, metric='cosine')
 res = ts.search(texts1, threshold=0.5, topn=2)
@@ -167,7 +167,7 @@ X = [text1, text2, ... textn]
 y = [label1, label2, ... labeln]
 ```
 
-+ **FastText**
+**FastText**
 ```
 from textgo import FastText
 ft = FastText()
@@ -189,7 +189,7 @@ classification_report, acc = ft.evaluate(X_test, y_test, model)
 predpro, predclass = ft.predict(X_test, model)
 ```
 
-+ **XGBoost**
+**XGBoost**
 ```
 from textgo import XGBoost
 xgb = XGBoost()
@@ -219,7 +219,7 @@ classification_report, acc = xgb.evaluate(X_test, y_test, model)
 predpro, predclass = xgb.predict(X_test, model)
 ```
 
-+ **Bert**
+**Bert**
 ```
 from textgo import Bert
 bert = Bert()
