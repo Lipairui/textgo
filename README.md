@@ -14,6 +14,7 @@ Install and update using pip:
 **1. Text preprocessing**
    
 * Clean
+
 Chinese:
 ```
 from textgo import Preprocess
