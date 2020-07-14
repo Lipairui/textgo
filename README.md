@@ -61,9 +61,31 @@ print(ptexts1)
 ptexts2 = tp2.preprocess(texts2)
 print(ptexts2)
 ```
-```'natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']```
+```['natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']```
 
 **2. Text representation**
+```
+from textgo import Embeddings
+petxts = ['自然语言 处理 计算机科学 领域 人工智能 领域 中 重要 方向', '文本 预处理 其实 很 简单']
+emb = Embeddings()
+# BOW
+bow_emb = emb.bow(ptexts)
+# TF-IDF
+tfidf_emb = emb.tfidf(ptexts)
+# LDA
+lda_emb = emb.lda(ptexts, dim=2)
+# LSA
+lsa_emb = emb.lsa(petxts, dim=2)
+# PCA
+pca_emb = emb.pca(ptexts, dim=2)
+# Word2Vec
+w2v_emb = emb.word2vec(ptexts, method='word2vec', model_path='model/word2vec.bin')
+# GloVe
+glove_emb = emb.word2vec(ptexts, method='glove', model_path='model/glove.bin')
+# FastText
+ft_emb = emb.word2vec(ptexts, method='fasttext', model_path='model/fasttext.bin')
+
+```
 
 **3. Similarity calculation**
 
