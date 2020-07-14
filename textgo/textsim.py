@@ -11,9 +11,9 @@ import numpy as np
 from sklearn.preprocessing import normalize
 
 # import local modules
-from embeddings import Embeddings
-from preprocess import Preprocess
-from metrics import Metrics
+from .embeddings import Embeddings
+from .preprocess import Preprocess
+from .metrics import Metrics
 
 class TextSim():
     def __init__(self, lang='zh', filter_words=[], method='word2vec', model_path=''):
@@ -53,7 +53,10 @@ class TextSim():
             texts = texts1
         # Preprocess text
         logger.info('Preprocess text...')
-        ptexts = self.tp.preprocess(texts)
+        if self.method=='bert':
+            ptexts = self.tp.clean(texts)
+        else:
+            ptexts = self.tp.preprocess(texts)
         # Get embeddings
         logger.info('Get embeddings...')
         embeddings = self.emb.get_embeddings(ptexts, method=self.method)
@@ -146,8 +149,11 @@ class TextSim():
             search_index object
         '''
         # Preprocess text  
-        logger.info('Preprocess text...')  
-        ptexts = self.tp.preprocess(texts)  
+        logger.info('Preprocess text...') 
+        if self.method=='bert': 
+            ptexts = self.tp.clean(texts)
+        else: 
+            ptexts = self.tp.preprocess(texts)  
         # Get embeddings  
         logger.info('Get embeddings...')  
         embeddings = self.emb.get_embeddings(ptexts, method=self.method)
@@ -186,7 +192,10 @@ class TextSim():
         '''
         # Preprocess text   
         logger.info('Preprocess text...')   
-        ptexts = self.tp.preprocess(texts)   
+        if self.method=='bert':  
+            ptexts = self.tp.clean(texts)
+        else:
+            ptexts = self.tp.preprocess(texts)   
         # Get embeddings   
         logger.info('Get embeddings...')   
         embeddings = self.emb.get_embeddings(ptexts, method=self.method) 
@@ -211,12 +220,14 @@ class TextSim():
             for i in range(len(texts)):
                 res = []
                 for j in range(I.shape[1]):
+                    sim_index = I[i][j]
+                    sim_score = D[i][j]
                     if self.search_metric=='cosine': 
-                        if D[i][j]>=threshold: # 余弦相似度越高越相似
-                            res.append((j, self.search_db[j], D[i][j]))
+                        if sim_score>=threshold: # 余弦相似度越高越相似
+                            res.append((sim_index, self.search_db[sim_index], sim_score))
                     elif self.search_metric=='euclidean':
-                        if D[i][j]<=threshold: # 欧式距离越小越相似
-                            res.append((j, self.search_db[j], D[i][j]))
+                        if sim_score<=threshold: # 欧式距离越小越相似
+                            res.append((sim_index, self.search_db[sim_index], sim_score))
                 result.append(res)
         return result
 
@@ -227,7 +238,7 @@ if __name__ == '__main__':
         "但通常来讲，高脂肪和陈年奶酪的K2含量较高", 
         "此外，维生素K还是一种脂溶性维生素，就是说当它与富含健康脂肪的食物!"]
     #ts = TextSim(method='word2vec',model_path='../w2v_models/Tencent_AILab_ChineseEmbedding/Tencent_AILab_ChineseEmbedding')
-    ts = TextSim(method='bert',model_path='../bert-base-chinese')
+    ts = TextSim(method='bert',model_path='../../bert-base-chinese')
     #res = ts.similarity(texts1, texts2)
     #print(res)
     #res = ts.get_similar_res(texts2, threshold=1)

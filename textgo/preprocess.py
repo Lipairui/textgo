@@ -23,65 +23,74 @@ class Preprocess():
         
         self.stopwords = open(stopwords_path).read().strip().split('\n')
         self.stopwords.extend(filter_words) 
+        self.stopwords.append(' ')
         self.stopwords = set(self.stopwords)
 
-    def clean(self, text):
+    def clean(self, texts):
         '''Clean text, including dropping html tags, url, extra space and punctuation 
         as well as string lower.
         Input:
-            text: string.
+            text: list of strings.
         Output:
             text: preprocessed string.
         '''
-        # drop html tags 
-        text = re.sub('<[^>]*>|&quot|&nbsp','',text)
-        # drop url
-        url_regrex = u'((http|https)\\:\\/\\/)?[a-zA-Z0-9\\.\\/\\?\\:@\\-_=#]+\\.([a-zA-Z]){2,6}([a-zA-Z0-9\\.\\&\\/\\?\\:@\\-_=#])*'
-        text = re.sub(url_regrex,'',text)
-        # only keep Chinese/English/space
-        text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s]", " ",text) 
-        # drop space at the start and in the end
-        text = re.sub(u"\s$|^\s","",text)
-        # replace more than 2 space with 1 space
-        text = re.sub(u"[\s]{2,}"," ",text).strip()
-        # lower string
-        text = text.lower()
-        return text
+        ptexts = []
+        for text in texts:
+            # drop html tags 
+            text = re.sub('<[^>]*>|&quot|&nbsp','',text)
+            # drop url
+            url_regrex = u'((http|https)\\:\\/\\/)?[a-zA-Z0-9\\.\\/\\?\\:@\\-_=#]+\\.([a-zA-Z]){2,6}([a-zA-Z0-9\\.\\&\\/\\?\\:@\\-_=#])*'
+            text = re.sub(url_regrex,'',text)
+            # only keep Chinese/English/space
+            text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s]", " ",text) 
+            # drop space at the start and in the end
+            text = re.sub(u"\s$|^\s","",text)
+            # replace more than 2 space with 1 space
+            text = re.sub(u"[\s]{2,}"," ",text).strip()
+            # lower string
+            text = text.lower()
+            ptexts.append(text)
+        return ptexts
 
-    def tokenize(self, text):
+    def tokenize(self, texts, drop_stopwords=True):
         '''Tokenize string.
         Input:
-            text: string.
+            text: list of strings.
+            drop_stopwords: boolean. Whether drop stopwords or not.
         Output:
-            tokens: list of tokens.
+            tokens_list: list of list of tokens.
         '''
+        tokens_list = []
         if self.lang == 'en':
-            tokens = text.split(' ')
+            for text in texts:
+                tokens = text.split(' ')
+                if drop_stopwords:
+                    tokens = [token for token in tokens if token not in self.stopwords]
+                tokens_list.append(tokens)
         elif self.lang == "zh":
-            tokens = list(jieba.cut(text))
-        return tokens
+            for text in texts:
+                tokens = list(jieba.cut(text))
+                if drop_stopwords:
+                    tokens = [token for token in tokens if token not in self.stopwords]
+                tokens_list.append(tokens)
+        return tokens_list
 
-    def preprocess(self, texts, sep=' '):
+    def preprocess(self, texts, sep=' ', drop_stopwords=True):
         '''Text preprocess for English/Chinese, including clean text, tokenize and remove 
         stopwords.
         Input:
             texts: list of text strings
             sep: string used to join words after tokenization
+            drop_stopwords: boolean. Whether drop stopwords or not.
         Output:
             list of preprocessed text strings (tokens join by sep)
         '''
-        result = []
-        for text in texts:
-            # clean text
-            ptext = self.clean(text)
-            # tokenize
-            tokens = self.tokenize(ptext)
-            # remove stopwords
-            tokens = [token for token in tokens if token not in self.stopwords and token!=' ']
-            # join tokens by sep
-            res = sep.join(tokens)
-            #logger.info(res)
-            result.append(res)
+        # clean text
+        ptexts = self.clean(texts)
+        # tokenize
+        tokens_list = self.tokenize(ptexts, drop_stopwords)
+        # join by sep
+        result = [sep.join(tokens) for tokens in tokens_list]
         return result
 
 
