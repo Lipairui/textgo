@@ -70,21 +70,37 @@ petxts = ['自然语言 处理 计算机科学 领域 人工智能 领域 中 �
 emb = Embeddings()
 # BOW
 bow_emb = emb.bow(ptexts)
+
 # TF-IDF
 tfidf_emb = emb.tfidf(ptexts)
+
 # LDA
 lda_emb = emb.lda(ptexts, dim=2)
+
 # LSA
 lsa_emb = emb.lsa(petxts, dim=2)
+
 # PCA
 pca_emb = emb.pca(ptexts, dim=2)
+
 # Word2Vec
 w2v_emb = emb.word2vec(ptexts, method='word2vec', model_path='model/word2vec.bin')
+
 # GloVe
 glove_emb = emb.word2vec(ptexts, method='glove', model_path='model/glove.bin')
+
 # FastText
 ft_emb = emb.word2vec(ptexts, method='fasttext', model_path='model/fasttext.bin')
 
+# BERT
+bert_emb = emb.bert(ptexts, model_path='model/bert-base-chinese')
+
+```
+Tips: For methods like Word2Vec and BERT, you can load the model first and then get embeddings to avoid loading model repeatedly. Take BERT For example:
+```
+emb.load_model(method="bert", model_path='model/bert-base-chinese')
+bert_emb1 = emb.bert(ptexts1)
+bert_emb2 = emb.bert(ptexts2)
 ```
 
 **3. Similarity calculation**
