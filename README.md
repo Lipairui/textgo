@@ -175,6 +175,8 @@ ft = FastText()
 # preprocess
 tp = Preprocess(lang='en')
 X = tp.preprocess(X)
+
+# train test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
 
 # train
@@ -187,6 +189,36 @@ classification_report, acc = ft.evaluate(X_test, y_test, model)
 predpro, predclass = ft.predict(X_test, model)
 ```
 
++ **XGBoost**
+```
+from textgo import XGBoost
+xgb = XGBoost()
+
+# preprocess
+tp = Preprocess(lang='en')
+X = tp.preprocess(X)
+
+
+# get features
+from textgo import Embeddings
+emb = Embeddings()
+tfidf_emb = emb.tfidf(X)
+lda_emb = emb.lda(X, dim=10)
+X = np.concatenate((tfidf_emb,lda_emb),axis=1)
+
+# train test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
+
+# train
+model = xgb.train(X_train, y_train, output_path=output_path, num_rounds=50)
+
+# evaluate
+classification_report, acc = xgb.evaluate(X_test, y_test, model)
+
+# predict
+predpro, predclass = xgb.predict(X_test, model)
+```
+
 + **Bert**
 ```
 from textgo import Bert
@@ -195,6 +227,8 @@ bert = Bert()
 # preprocess
 tp = Preprocess(lang='en')
 X = tp.clean(X) # BERT has its own tokenizer, so we don't need to tokenize.
+
+# train test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
 
 # train
