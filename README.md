@@ -1,5 +1,3 @@
-![TextGo](./TextGo.png   "A powerful NLP toolkit.")
-
 <p align="center">
     <img src="./TextGo.png">
 </p>
