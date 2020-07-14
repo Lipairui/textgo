@@ -132,6 +132,30 @@ array([[0.9143138 , 0.772496  ],
 `
        
 ### 4. Text search
+It also supports searching query text in a large text database based on cosine similarity or euclidean distance. It provides two kinds of implementation: the normal one which is suitable for small dataset and the optimized one which is based on Faiss and suitable for large dataset.
+```
+from textgo import TextSim
+# query texts
+texts1 = ["A soccer game with multiple males playing."]
+# database
+texts2 = ["Some men are playing a sport.", "A man is driving down a lonely road.", "A happy woman in a fairy costume holds an umbrella."]
+ts = TextSim(lang='en', method='word2vec', model_path='model/word2vec.bin')
+```
+
++ **Normal search**
+```
+res = ts.get_similar_res(texts1, texts2, metric='cosine', threshold=0.5, topn=2)
+print(res)
+```
+Output: `[[(0, 'Some men are playing a sport.', 0.828473786041309), (2, 'A happy woman in a fairy costume holds an umbrella.', 0.6092772768557395)]]`
+
++ **Fast search**
+```
+ts.build_index(texts2, metric='cosine')
+res = ts.search(texts1, threshold=0.5, topn=2)
+print(res)
+```
+Output: `[[(0, 'Some men are playing a sport.', 0.828474), (1, 'A man is driving down a lonely road.', 0.60927737)]]`
 
 ### 5. Text classification
   
