@@ -14,21 +14,22 @@ Install and update using pip:
 **1. Text preprocessing**
    
 * Clean
+Chinese:
 ```
 from textgo import Preprocess
-# Chinese
 tp1 = Preprocess(lang='zh')
 texts1 = ["<text>自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。<\text>", "??文本预处理~其实很简单！"]
 ptexts1 = [tp1.clean(text) for text in texts1]
 print(ptexts1)
 ```
 
-Output:
+Output: 
 ```
- ['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']```
+ ['自然语言处理是计算机科学领域与人工智能领域中的一个重要方向', '文本预处理其实很简单']
+```
 
+English:
 ```
-# English
 tp2 = Preprocess(lang='en')
 texts2 = ["<text>Natural Language Processing, usually shortened as NLP, is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language<\text>"]
 ptexts2 = [tp2.clean(text) for text in texts2]
