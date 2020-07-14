@@ -10,6 +10,7 @@
 ## Installing
 Install and update using pip:      
 `pip install textgo`
+
 Tips: fasttext package needs to be installed manually as follows:
 
 ```
@@ -263,4 +264,5 @@ classification_report, acc, loss = bert.evaluate(X_test, y_test, model=model, to
 predpro, predclass = bert.predict(X_test, model=model, tokenizer=tokenizer, batch_size=args['batch_size'],max_len=args['max_len'],num_labels=args['num_labels'])
 ```
 
-## Getting Started
+## LICENSE
+TextGo is MIT-licensed.
