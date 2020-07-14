@@ -25,7 +25,7 @@ class Preprocess():
         self.stopwords.extend(filter_words) 
         self.stopwords = set(self.stopwords)
 
-    def clean_text(self, text):
+    def clean(self, text):
         '''Clean text, including dropping html tags, url, extra space and punctuation 
         as well as string lower.
         Input:
@@ -58,7 +58,7 @@ class Preprocess():
         if self.lang == 'en':
             tokens = text.split(' ')
         elif self.lang == "zh":
-            tokens = jieba.cut(text)
+            tokens = list(jieba.cut(text))
         return tokens
 
     def preprocess(self, texts, sep=' '):
@@ -73,7 +73,7 @@ class Preprocess():
         result = []
         for text in texts:
             # clean text
-            ptext = self.clean_text(text)
+            ptext = self.clean(text)
             # tokenize
             tokens = self.tokenize(ptext)
             # remove stopwords
