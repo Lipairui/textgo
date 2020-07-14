@@ -13,7 +13,7 @@ Install and update using pip:
 ## Getting Started
 ### 1. Text preprocessing
    
-** +Clean **
+* **Clean**
 
 Example:   
 ```
