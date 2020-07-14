@@ -49,6 +49,19 @@ print(tokens2)
 ```[['natural', 'language', 'processing', 'usually', 'shortened', 'as', 'nlp', 'is', 'a', 'branch', 'of', 'artificial', 'intelligence', 'that', 'deals', 'with', 'the', 'interaction', 'between', 'computers', 'and', 'humans', 'using', 'the', 'natural', 'language']]```
 
 * Preprocess (Clean + Tokenize + Remove stopwords)
+```
+# Chinese
+ptexts1 = tp1.preprocess(texts1)
+print(ptexts1)
+```
+```['自然语言 处理 计算机科学 领域 人工智能 领域 中 重要 方向', '文本 预处理 其实 很 简单']```
+
+```
+# English
+ptexts2 = tp2.preprocess(texts2)
+print(ptexts2)
+```
+```'natural language processing usually shortened nlp branch artificial intelligence deals interaction computers humans using natural language']```
 
 **2. Text representation**
 
