@@ -282,8 +282,9 @@ if __name__ == '__main__':
     lsa_zh = emb.lsa(corpus_zh,dim=2) 
     print(lsa_zh)
 
-    # word2vec 
-    emb = Embeddings(method='word2vec',model_path="../w2v_models/Tencent_AILab_ChineseEmbedding/Tencent_AILab_ChineseEmbedding") 
+    # word2vec
+    emb = Embeddings() 
+    emb.load_model(method='word2vec',model_path="../w2v_models/Tencent_AILab_ChineseEmbedding/Tencent_AILab_ChineseEmbedding") 
     word2vec_zh = emb.word2vec(corpus_zh) 
     print(word2vec_zh)
     
@@ -295,7 +296,8 @@ if __name__ == '__main__':
     #transformGlove(source_model_path,target_model,binary=True)
     target_model_path = target_model+'.bin'
     # get embeddings
-    emb = Embeddings(method='word2vec',model_path=target_model_path)
+    emb = Embeddings()
+    emb.load_model(method='word2vec',model_path=target_model_path)
     glove_en = emb.word2vec(corpus_en)
     print(glove_en)
     
@@ -303,11 +305,13 @@ if __name__ == '__main__':
     model_path = os.path.join(os.path.dirname(__file__),"../w2v_models/FastText/en/cc.en.300.bin")
     
     emb = Embeddings()
-    ft_en = emb.word2vec(corpus_en, method='fasttext', model_path=model_path)
+    emb.load_model(method='fasttext', model_path=model_path)
+    ft_en = emb.word2vec(corpus_en)
     print(ft_en.shape)
     '''
 
     emb = Embeddings()
     model_path = os.path.join(os.path.dirname(__file__),"../bert-base-chinese")
-    bert_zh = emb.bert(corpus_zh, model_path=model_path)
+    emb.load_model(method='bert', model_path=model_path)
+    bert_zh = emb.bert(corpus_zh)
     print(bert_zh.shape)

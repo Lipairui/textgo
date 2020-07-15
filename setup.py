@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="textgo",
-    version="0.4",
+    version="0.5",
     author="Pairui Li",
     author_email="953383269@qq.com",
     description="Let's go and play with text!",
