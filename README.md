@@ -180,7 +180,7 @@ y = [label1, label2, ... labeln]
 
 **FastText**
 ```
-from textgo import FastText
+from textgo.classifier import FastText
 ft = FastText()
 
 # preprocess
@@ -202,7 +202,7 @@ predpro, predclass = ft.predict(X_test, model)
 
 **XGBoost**
 ```
-from textgo import XGBoost
+from textgo.classifier import XGBoost
 xgb = XGBoost()
 
 # preprocess
@@ -233,7 +233,7 @@ predpro, predclass = xgb.predict(X_test, model)
 
 **Bert**
 ```
-from textgo import Bert
+from textgo.classifier import Bert
 bert = Bert()
 
 # preprocess
