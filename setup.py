@@ -12,8 +12,9 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Lipairui/textgo",
-    #packages=setuptools.find_packages(),
-    packages=['textgo','textgo.classifier','textgo.data'],
+    packages=setuptools.find_packages(),
+    include_package_data = True,
+    #packages=['textgo','textgo.classifier'],
     install_requires=[ # 依赖列表
         'jieba>=0.42.1',
         'tqdm>=4.46.0',

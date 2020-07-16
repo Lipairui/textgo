@@ -9,17 +9,19 @@ logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 logger = logging.getLogger(__file__)
 
 class Preprocess():
-    def __init__(self, lang='zh', filter_words=[]):
+    def __init__(self, lang='zh', filter_words=[], stopwords_path=''):
         '''
         Input:
             lang: string. "zh" for Chinese or "en" for English.
             filter_words: list of strings. Words need to be filtered after tokenization.
+            stopwords_path: string. Path of stopwords file.  
         '''
         self.lang = lang
-        if lang == 'en':
-            stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_en.txt")
-        elif lang == "zh":
-            stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_zh.txt")
+        if stopwords_path=='':
+            if lang == 'en':
+                stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_en.txt")
+            elif lang == "zh":
+                stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_zh.txt")
         
         self.stopwords = open(stopwords_path).read().strip().split('\n')
         self.stopwords.extend(filter_words) 
