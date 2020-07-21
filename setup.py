@@ -1,3 +1,4 @@
+# coding: utf-8
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -5,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="textgo",
-    version="0.6",
+    version="0.7",
     author="Pairui Li",
     author_email="953383269@qq.com",
     description="Let's go and play with text!",
