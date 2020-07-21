@@ -333,10 +333,8 @@ class Bert():
             b_input_mask = batch[1].to(self.device)
             if X2 is None:
                 b_token_type_ids = None
-                b_labels = batch[2].to(self.device)
             else:
                 b_token_type_ids = batch[2].to(self.device)
-                b_labels = batch[3].to(self.device)
             with torch.no_grad():
                 res = model(b_input_ids, 
                              token_type_ids=b_token_type_ids, 
