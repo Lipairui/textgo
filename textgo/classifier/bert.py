@@ -11,6 +11,8 @@ import torch
 from sklearn.metrics import classification_report, accuracy_score
 from transformers import BertTokenizer, BertForSequenceClassification, AdamW, BertConfig, get_linear_schedule_with_warmup
 from torch.utils.data import TensorDataset, random_split, DataLoader, RandomSampler, SequentialSampler
+from scipy.special import softmax
+
 import logging 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s" 
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT) 
