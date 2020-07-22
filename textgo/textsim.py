@@ -6,7 +6,6 @@ import logging
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s" 
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT) 
 logger = logging.getLogger(__file__)
-import faiss
 import numpy as np
 from sklearn.preprocessing import normalize
 
@@ -148,6 +147,7 @@ class TextSim():
         Output:
             search_index object
         '''
+        import faiss
         # Preprocess text  
         logger.info('Preprocess text...') 
         if self.method=='bert': 

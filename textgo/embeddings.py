@@ -7,10 +7,6 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.decomposition import PCA
 from sklearn.decomposition import TruncatedSVD
-from gensim.models import KeyedVectors
-from gensim.models.wrappers import FastText
-from transformers import BertTokenizer, BertModel
-import torch
 import logging 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s" 
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT) 
@@ -35,6 +31,7 @@ class Embeddings():
             return None
         logger.info('Load embedding model...')
         if method in ['word2vec','glove']:
+            from gensim.models import KeyedVectors
             if model_path[-4:]=='.txt':
                 self.model = KeyedVectors.load_word2vec_format(model_path,binary=False).wv
             elif model_path[-4:] =='.bin':
@@ -43,9 +40,11 @@ class Embeddings():
                 self.model = KeyedVectors.load(model_path,mmap='r').wv
             return self.model
         elif method == 'fasttext':
+            from gensim.models.wrappers import FastText
             self.model = FastText.load_fasttext_format(model_path).wv
             return self.model
         elif method == 'bert':
+            from transformers import BertTokenizer, BertModel 
             self.tokenizer = BertTokenizer.from_pretrained(model_path)
             self.model = BertModel.from_pretrained(model_path)
             return self.model
@@ -182,9 +181,11 @@ class Embeddings():
         Output:    
             embeddings: array of shape [n_sample, dim]    
         '''
+        import torch
         # load model
         if self.model is None and model_path!='':
             self.load_model('bert',model_path)
+            
         print(corpus)
         embeddings = []
         for text in corpus:
@@ -311,7 +312,8 @@ if __name__ == '__main__':
     '''
 
     emb = Embeddings()
-    model_path = os.path.join(os.path.dirname(__file__),"../bert-base-chinese")
+    model_path = os.path.join(os.path.dirname(__file__),"../../bert-base-chinese")
     emb.load_model(method='bert', model_path=model_path)
     bert_zh = emb.bert(corpus_zh)
     print(bert_zh.shape)
+

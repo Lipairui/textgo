@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="textgo",
-    version="0.7",
+    version="1.2",
     author="Pairui Li",
     author_email="953383269@qq.com",
     description="Let's go and play with text!",
@@ -19,14 +19,14 @@ setuptools.setup(
     install_requires=[ # 依赖列表
         'jieba>=0.42.1',
         'tqdm>=4.46.0',
-        'transformers>=2.3.0',
-        'numpy>=1.16.4',
-        'torch>=1.5.0+cu101',
-        'pandas>=1.0.3',
+        #'transformers>=2.3.0', # not support for python2
+        'numpy>=1.16.1',
+        'torch>=1.4.0+cu101',
+        'pandas>=0.24.0',
         'gensim>=3.8.3',
-        'faiss_cpu>=1.6.3',
-        'scikit_learn>=0.23.1',
-        'xgboost>=1.1.0'
+        #'faiss_cpu>=1.6.3', # installing on python2 causes error, python3 is ok.
+        'scikit_learn>=0.20.4',
+        'xgboost>=0.80'
     ],
     entry_points={
         'console_scripts': [
