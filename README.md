@@ -12,6 +12,7 @@
 Install and update using pip:      
 `pip install textgo`
 
+Note: successfully tested on python3.     
 Tips: the fasttext package needs to be installed manually as follows:
 
 ```
