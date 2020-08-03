@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="textgo",
-    version="1.2",
+    version="1.3",
     author="Pairui Li",
     author_email="953383269@qq.com",
     description="Let's go and play with text!",
@@ -26,7 +26,7 @@ setuptools.setup(
         'gensim>=3.8.3',
         #'faiss_cpu>=1.6.3', # installing on python2 causes error, python3 is ok.
         'scikit_learn>=0.20.4',
-        'xgboost>=0.80'
+        #'xgboost>=0.80'
     ],
     entry_points={
         'console_scripts': [
