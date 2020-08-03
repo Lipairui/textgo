@@ -38,6 +38,8 @@ class Preprocess():
         '''
         ptexts = []
         for text in texts:
+            # drop \n
+            text = re.sub('\n','',text)
             # drop html tags 
             text = re.sub('<[^>]*>|&quot|&nbsp','',text)
             # drop url
