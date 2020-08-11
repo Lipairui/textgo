@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 logger = logging.getLogger(__file__)
 
 # import local modules
-from utils import load_config, set_random_seed, get_device, get_time_dif
+from .utils import load_config, set_random_seed, get_device, get_time_dif
 
 class Model():
     def __init__(self, args):

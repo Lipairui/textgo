@@ -6,7 +6,7 @@ from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import train_test_split
 
 # import local modules
-from utils import load_config
+from .utils import load_config
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))   
 sys.path.append(os.path.join(BASE_DIR,'../'))  
 from preprocess import Preprocess
@@ -82,10 +82,8 @@ class Model():
         '''
         # Load model
         if type(model_path) is str:
-            if model=='':
+            if model_path=='':
                 model_path = self.args['save_path']
-            else:
-                model_path = model
             model = fasttext.load_model(model_path)
         else:
             model = model_path # model object

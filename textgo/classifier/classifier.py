@@ -4,17 +4,18 @@ import sys
 from importlib import import_module
 
 # import local modules
-from utils import load_config, build_vocab, Tokenizer
-
+from .utils import load_config, build_vocab, Tokenizer
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+BASE_MODULE = "textgo.classifier"
 
 class Classifier():
     def __init__(self, args):
         self.args = args
         self.nn_models = ['TextCNN','TextRNN','TextRCNN','TextRNN_Att']
         if args['model_name'] in self.nn_models:
-            module = import_module("nn_classifier")
+            module = import_module(BASE_MODULE+'.'+"nn_classifier")
         else:
-            module = import_module(args['model_name'])
+            module = import_module(BASE_MODULE+'.'+args['model_name'])
         self.model = module.Model(self.args)
         
     def train(self, X_train, y_train, X_dev=None, y_dev=None, evaluate_test=False):

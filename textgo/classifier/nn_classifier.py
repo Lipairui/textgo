@@ -11,6 +11,7 @@ from utils import load_config, set_random_seed, get_device, load_vocab, build_vo
 from train_eval import train, evaluate, predict, init_network
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
 sys.path.append(os.path.join(BASE_DIR,'../')) 
+BASE_MODULE = "textgo.classifier"
 from preprocess import Preprocess
 
 class Model():
@@ -27,7 +28,7 @@ class Model():
         else:
             self.args['embedding_pretrained'] = torch.tensor(get_pretrained_embeddings(self.args['embedding'], self.vocab, method='word2vec'))
             self.args['embed'] = self.args['embedding_pretrained'].size(1) 
-        module = import_module(args['model_name'])
+        module = import_module(BASE_MODULE+'.'+args['model_name'])
         self.model = module.Model(self.args).to(self.device)
         
     def train(self, X_train, y_train, X_dev=None, y_dev=None, evaluate_test=False):
