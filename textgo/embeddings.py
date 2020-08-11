@@ -61,7 +61,7 @@ class Embeddings():
         Output:
             embeddings: array of shape [n_sample, dim]
         '''
-        vectorizer = CountVectorizer(ngram_range=ngram_range, min_df=min_df, token_pattern=r'\b\w{1,}\b')
+        vectorizer = CountVectorizer(ngram_range=ngram_range, min_df=min_df, token_pattern='(?u)\\b\\w+\\b') 
         # The default token_pattern r'\b\w+\b' tokenizes the string by extracting words of at least 2 letters, which is not suitable for Chinese
         X = vectorizer.fit_transform(corpus)
         #print(vectorizer.get_feature_names())
@@ -309,11 +309,15 @@ if __name__ == '__main__':
     emb.load_model(method='fasttext', model_path=model_path)
     ft_en = emb.word2vec(corpus_en)
     print(ft_en.shape)
-    '''
-
+    
     emb = Embeddings()
     model_path = os.path.join(os.path.dirname(__file__),"../../bert-base-chinese")
     emb.load_model(method='bert', model_path=model_path)
     bert_zh = emb.bert(corpus_zh)
     print(bert_zh.shape)
-
+    '''
+    emb = Embeddings() 
+    bow_en = emb.bow(corpus_en) 
+    print(bow_en) 
+    bow_zh = emb.bow(corpus_zh) 
+    print(bow_zh)

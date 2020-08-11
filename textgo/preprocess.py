@@ -28,7 +28,7 @@ class Preprocess():
         self.stopwords.append(' ')
         self.stopwords = set(self.stopwords)
 
-    def clean(self, texts):
+    def clean(self, texts, drop_space=False):
         '''Clean text, including dropping html tags, url, extra space and punctuation 
         as well as string lower.
         Input:
@@ -45,12 +45,16 @@ class Preprocess():
             # drop url
             url_regrex = u'((http|https)\\:\\/\\/)?[a-zA-Z0-9\\.\\/\\?\\:@\\-_=#]+\\.([a-zA-Z]){2,6}([a-zA-Z0-9\\.\\&\\/\\?\\:@\\-_=#])*'
             text = re.sub(url_regrex,'',text)
-            # only keep Chinese/English/space
-            text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s]", " ",text) 
-            # drop space at the start and in the end
-            text = re.sub(u"\s$|^\s","",text)
-            # replace more than 2 space with 1 space
-            text = re.sub(u"[\s]{2,}"," ",text).strip()
+            # only keep Chinese/English/space/numbers
+            text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s^0-9]", " ",text) 
+            if drop_space:
+                # drop any space
+                text = re.sub(u"[\s]{1,}","",text).strip()
+            else:
+                # drop space at the start and in the end
+                text = re.sub(u"\s$|^\s","",text)
+                # replace more than 2 space with 1 space
+                text = re.sub(u"[\s]{2,}"," ",text).strip()
             # lower string
             text = text.lower()
             ptexts.append(text)
