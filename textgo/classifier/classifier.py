@@ -24,12 +24,14 @@ class Classifier():
                 return test_report, test_acc
             else:
                 self.model.train(X_train, y_train, evaluate_test=False)
+                return None, None
         else:
             if evaluate_test:
                 test_report, test_acc = self.model.train(X_train, y_train, X_dev, y_dev, evaluate_test=True)
                 return test_report, test_acc
             else:
                 self.model.train(X_train, y_train, X_dev, y_dev, evaluate_test=False)
+                return None, None
 
     def predict(self, X, model_path=''):
         predclass = self.model.predict(X, model_path=model_path)
