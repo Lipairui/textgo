@@ -6,9 +6,9 @@ from sklearn.model_selection import train_test_split
 import torch
 
 # import local modules
-from utils import load_config, set_random_seed, get_device, load_vocab, build_vocab, get_data_iterator, Tokenizer, get_pretrained_embeddings
+from .utils import load_config, set_random_seed, get_device, load_vocab, build_vocab, get_data_iterator, Tokenizer, get_pretrained_embeddings
 
-from train_eval import train, evaluate, predict, init_network
+from .train_eval import train, evaluate, predict, init_network
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
 sys.path.append(os.path.join(BASE_DIR,'../')) 
 BASE_MODULE = "textgo.classifier"
