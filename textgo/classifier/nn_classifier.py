@@ -49,13 +49,20 @@ class Model():
             test_report, test_acc, test_loss = evaluate(self.args, self.model, test_iter)
             return test_report, test_acc
 
-    def predict(self, X, model_path=''):
-        if model_path=='':
-            model_path = self.args['save_path']
+    def predict(self, X, model_path='', model=None):
+        if model is None:
+            if model_path == '':
+                model_path = self.args['save_path']
+            model = self.load_model(model_path)
         data_iter = get_data_iterator(self.args, self.vocab, X)
-        predclass = predict(self.args, self.model, data_iter, model_path)
+        predclass = predict(self.args, model, data_iter)
         return predclass
 
+    def load_model(self, model_path):
+        self.model.load_state_dict(torch.load(model_path))
+        self.model.eval() 
+        return self.model
+ 
 if __name__ == '__main__':
     # load data
     import pandas as pd

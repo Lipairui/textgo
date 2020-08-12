@@ -34,9 +34,20 @@ class Classifier():
                 self.model.train(X_train, y_train, X_dev, y_dev, evaluate_test=False)
                 return None, None
 
-    def predict(self, X, model_path=''):
-        predclass = self.model.predict(X, model_path=model_path)
+    def predict(self, X, model_path='', model=None, tokenizer=None):
+        if self.args['model_name']=='Bert':
+            predclass = self.model.predict(X, model_path=model_path, model=model, tokenizer=tokenizer)
+        else:
+            predclass = self.model.predict(X, model_path=model_path, model=model)
         return predclass
+
+    def load_model(self, model_path):
+        model = self.model.load_model(model_path)
+        if self.args['model_name']=='Bert':
+            tokenizer = self.model.load_tokenizer(model_path)
+            return model, tokenizer
+        else:
+            return model, None
 
 if __name__ == '__main__':
     # load data

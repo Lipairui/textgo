@@ -71,7 +71,11 @@ class Model():
             test_report, test_acc = self.evaluate(X_test,y_test,model)
             return test_report, test_acc
 
-    def predict(self, X, model_path=''):
+    def load_model(self, model_path):
+        model = fasttext.load_model(model_path)
+        return model
+
+    def predict(self, X, model_path='', model=None):
         '''Predict.
         Input:
             X: list of preprocessed text strings (sep by ' ')
@@ -81,12 +85,10 @@ class Model():
             predclass: string, predicted class
         '''
         # Load model
-        if type(model_path) is str:
-            if model_path=='':
+        if model is None:
+            if model_path == '':
                 model_path = self.args['save_path']
-            model = fasttext.load_model(model_path)
-        else:
-            model = model_path # model object
+            model = self.load_model(model_path)
         # Preprocess data
         X = self.tp.preprocess(X)
         # Predict

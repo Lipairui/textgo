@@ -338,12 +338,14 @@ class Model():
         max_len = self.args['max_len']
         num_classes = self.args['num_classes'] 
         # Load model
-        if (model is None) or (tokenizer is None) and model_path=='':
-            model_path = self.args['save_path']
-        if model is None:
+        if model is None: 
+            if model_path=='':
+                model_path = self.args['save_path']
             model = self.load_model(model_path)
         # Load tokenizer
         if tokenizer is None:
+            if model_path=='':
+                model_path = self.args['save_path']
             tokenizer = self.load_tokenizer(model_path)
         model.eval()
         total_loss = 0
@@ -372,7 +374,7 @@ class Model():
             predclass.extend(batch_predclass)
             batch_predpro = softmax(logits, axis=1)[:,1].flatten()
             predpro.extend(batch_predpro)
-        return predpro,predclass
+        return predclass
 
     def get_dataloader(self,tokenizer,X1,X2=None,y=None,shuffle=False,show_process=False):
         '''Get dataloader for bert.

@@ -112,9 +112,7 @@ def evaluate(args, model, data_iter, load_model=True):
     #confusion = metrics.confusion_matrix(labels_all, predict_all)
     return report_dict, acc, avg_loss
 
-def predict(args, model, data_iter, model_path=''):
-    if model_path!='':
-        model.load_state_dict(torch.load(model_path))
+def predict(args, model, data_iter):
     model.eval()
     loss_total = 0
     predict_all = np.array([], dtype=int)
