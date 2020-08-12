@@ -36,7 +36,7 @@ class Classifier():
 
     def predict(self, X, model_path='', model=None, tokenizer=None):
         if self.args['model_name']=='Bert':
-            predclass = self.model.predict(X, model_path=model_path, model=model, tokenizer=tokenizer)
+            predclass = self.model.predict(X, model_path=model_path, model=model, tokenizer=tokenizer, show_process=True)
         else:
             predclass = self.model.predict(X, model_path=model_path, model=model)
         return predclass
