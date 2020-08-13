@@ -59,7 +59,7 @@ class Model():
         return predclass
 
     def load_model(self, model_path):
-        self.model.load_state_dict(torch.load(model_path))
+        self.model.load_state_dict(torch.load(model_path,map_location=self.device))
         self.model.eval() 
         return self.model
  

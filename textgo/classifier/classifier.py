@@ -6,7 +6,7 @@ from importlib import import_module
 # import local modules
 from .utils import load_config, build_vocab, Tokenizer
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
-BASE_MODULE = "textgo.classifier"
+BASE_MODULE = "classifier"
 
 class Classifier():
     def __init__(self, args):
