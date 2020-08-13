@@ -11,7 +11,7 @@ from .utils import load_config, set_random_seed, get_device, load_vocab, build_v
 from .train_eval import train, evaluate, predict, init_network
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
 sys.path.append(os.path.join(BASE_DIR,'../')) 
-BASE_MODULE = "textgo.classifier"
+BASE_MODULE = "classifier"
 from preprocess import Preprocess
 
 class Model():
