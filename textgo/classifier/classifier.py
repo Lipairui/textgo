@@ -35,7 +35,7 @@ class Classifier():
                 return None, None
 
     def predict(self, X, model_path='', model=None, tokenizer=None):
-        if self.args['model_name']=='Bert':
+        if self.args['model_name'] in ['Bert','XLNet']:
             predclass = self.model.predict(X, model_path=model_path, model=model, tokenizer=tokenizer, show_process=True)
         else:
             predclass = self.model.predict(X, model_path=model_path, model=model)
@@ -43,7 +43,7 @@ class Classifier():
 
     def load_model(self, model_path):
         model = self.model.load_model(model_path)
-        if self.args['model_name']=='Bert':
+        if self.args['model_name'] in ['Bert','XLNet']:
             tokenizer = self.model.load_tokenizer(model_path)
             return model, tokenizer
         else:

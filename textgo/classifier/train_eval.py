@@ -123,3 +123,24 @@ def predict(args, model, data_iter):
             predict_all = np.append(predict_all, predic)
     predict_all = predict_all.tolist()
     return predict_all
+
+def get_prior(y_train):
+    y_train_count = {} 
+    for label in y_train: 
+        if label not in y_train_count: 
+            y_train_count[int(label)] = 0 
+        else: 
+            y_train_count[int(label)] += 1 
+    prior = [] 
+    y_train_num = len(y_train_count) 
+    for i in range(y_train_num): 
+        prior.append(y_train_count[i]/float(len(y_train)))
+    return np.array(prior)
+
+def categorical_crossentropy_with_prior(y_true, y_pred, prior, device, tau=1.0):
+    log_prior = torch.tensor(np.log(prior+1e-8), device=device)
+    for _ in range(len(y_pred.shape)-1):
+        log_prior = log_prior.unsqueeze(0)
+    y_pred += tau * log_prior
+    loss = torch.nn.CrossEntropyLoss()
+    return loss(y_pred, y_true)

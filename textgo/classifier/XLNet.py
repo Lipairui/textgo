@@ -10,7 +10,8 @@ import pandas as pd
 import torch
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import train_test_split
-from transformers import BertTokenizer, BertForSequenceClassification, AdamW, BertConfig, get_linear_schedule_with_warmup
+from transformers import XLNetTokenizer, XLNetForSequenceClassification, AdamW, XLNetConfig, get_linear_schedule_with_warmup
+
 from torch.utils.data import TensorDataset, random_split, DataLoader, RandomSampler, SequentialSampler
 from scipy.special import softmax
 
@@ -449,7 +450,7 @@ class Model():
         input_ids = torch.cat(input_ids, dim=0)
         attention_masks = torch.cat(attention_masks, dim=0)
         if sentences2 is not None:
-            token_type_ids = torch.cat(token_type_ids, dim=0)
+            token_type_ids =XLNetch.cat(token_type_ids, dim=0)
             if y is not None:
                 labels = torch.tensor(labels)
                 # Combine the training inputs into a TensorDataset.
@@ -489,7 +490,7 @@ class Model():
         tokenizer.save_pretrained(output_dir)
     
     def load_model(self,model_path):
-        model = BertForSequenceClassification.from_pretrained(
+        model = XLNetForSequenceClassification.from_pretrained(
                 model_path, # Use the 12-layer BERT model
                 num_labels = self.args['num_classes'], # The number of output labels--2 for binary classification
                 output_attentions = False, # Whether the model returns attentions weights.
@@ -500,7 +501,7 @@ class Model():
         return model
 
     def load_tokenizer(self,model_path):
-        tokenizer = BertTokenizer.from_pretrained(model_path)
+        tokenizer = XLNetTokenizer.from_pretrained(model_path)
         return tokenizer
 
 if  __name__ == '__main__':
