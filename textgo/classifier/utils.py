@@ -46,7 +46,9 @@ def get_device():
         # Tell PyTorch to use the GPU.     
         print('There are %d GPU(s) available.' %torch.cuda.device_count())
         device_id = get_freer_gpu()
-        torch.cuda.set_device(device_id)
+        #torch.cuda.set_device(device_id)
+        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(device_id)
         print('We will use the GPU: %s [%d]' %(torch.cuda.get_device_name(device_id), device_id))
         device = torch.device("cuda") 
     else: 
