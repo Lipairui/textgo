@@ -44,15 +44,20 @@ def get_device():
     # If there's a GPU available... 
     if torch.cuda.is_available():     
         # Tell PyTorch to use the GPU.     
+        print('There are %d GPU(s) available.' %torch.cuda.device_count())
+        device_id = get_freer_gpu()
+        torch.cuda.set_device(device_id)
+        print('We will use the GPU: %s [%d]' %(torch.cuda.get_device_name(device_id), device_id))
         device = torch.device("cuda") 
- 
-        print('There are %d GPU(s) available.' %torch.cuda.device_count()) 
- 
-        print('We will use the GPU:%s' %torch.cuda.get_device_name(0)) 
     else: 
         print('No GPU available, using the CPU instead.') 
         device = torch.device("cpu") 
     return device
+
+def get_freer_gpu():
+    os.system('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free >tmp')
+    memory_available = [int(x.split()[2]) for x in open('tmp', 'r').readlines()]
+    return np.argmax(memory_available)
 
 def build_vocab(X, tokenizer, vocab_path='', binary=True, max_vocab_size=10000, min_freq=1):
     '''

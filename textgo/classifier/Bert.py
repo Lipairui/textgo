@@ -496,7 +496,7 @@ class Model():
                 output_hidden_states = False # Whether the model returns all hidden-states.
                 )
         if torch.cuda.is_available():
-            model.cuda()
+            model.cuda(self.device)
         return model
 
     def load_tokenizer(self,model_path):
