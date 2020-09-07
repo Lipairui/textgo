@@ -50,7 +50,7 @@ def get_device():
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
         os.environ["CUDA_VISIBLE_DEVICES"] = str(device_id)
         print('We will use the GPU: %s [%d]' %(torch.cuda.get_device_name(device_id), device_id))
-        device = torch.device("cuda") 
+        device = torch.device("cuda:%i"%device_id) 
     else: 
         print('No GPU available, using the CPU instead.') 
         device = torch.device("cpu") 
