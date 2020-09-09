@@ -6,7 +6,8 @@
 * Support both English and Chinese languages in text preprocessing
 * Provide various text representation algorithms including BOW, TF-IDF, LDA, LSA, PCA, Word2Vec/GloVe/FastText, BERT...
 * Support fast text search based on [Faiss](https://github.com/facebookresearch/faiss)
-* Support various text classification algorithms including FastText, XGBoost, BERT
+* Support various text classification algorithms including FastText, TextCNN, TextRNN, TextRCNN, TextRCNN_Att, Bert, XLNet
+* Very easy to use/employ in just a few lines of code
 
 ## Installing
 Install and update using pip:      
