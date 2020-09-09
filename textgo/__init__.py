@@ -7,4 +7,4 @@ from .classifier import Classifier
 
 from pbr.version import VersionInfo
 all = ('__version__')
-__version__ = VersionInfo('textgo').release_string() 
+__version__ = VersionInfo('textgo').release_string()
