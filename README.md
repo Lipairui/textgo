@@ -170,100 +170,27 @@ print(res)
 Output: `[[(0, 'Some men are playing a sport.', 0.828474), (1, 'A man is driving down a lonely road.', 0.60927737)]]`
 
 ### 5. Text classification
+Train a text classifier just in several lines. Models supported: FastText, TextCNN, TextRNN, TextRCNN, TextRCNN_Att, Bert, XLNet.
 ```
-from textgo import Preprocess
-from sklearn.model_selection import train_test_split
-
 # Prepare data
 X = [text1, text2, ... textn]
 y = [label1, label2, ... labeln]
-```
 
-**FastText**
-```
-from textgo.classifier import FastText
-ft = FastText()
+from textgo import Classifier
 
-# preprocess
-tp = Preprocess(lang='en')
-X = tp.preprocess(X)
+# load config
+config_path = "./config.ini"  # Include all model parameters
+model_name = "Bert" # Supported models: FastText, TextCNN, TextRNN, TextRCNN, TextRCNN_Att, Bert, XLNet
+args = load_config(config_path, model_name) 
+args['model_name'] = model_name 
+args['save_path'] = "output/%s"%model_name
 
-# train test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
-
-# train
-model = ft.train(X_train, y_train, output_path, epoch=10)
-
-# evaluate
-classification_report, acc = ft.evaluate(X_test, y_test, model)
+# train 
+clf = Classifier(args) 
+clf.train(X_train, y_train, evaluate_test=False) # If evaluate_test=True, then it will split 10% for test dataset and evaluate on test dataset. 
 
 # predict
-predpro, predclass = ft.predict(X_test, model)
-```
-
-**XGBoost**
-```
-from textgo.classifier import XGBoost
-xgb = XGBoost()
-
-# preprocess
-tp = Preprocess(lang='en')
-X = tp.preprocess(X)
-
-
-# get features
-from textgo import Embeddings
-import numpy as np
-emb = Embeddings()
-tfidf_emb = emb.tfidf(X)
-lda_emb = emb.lda(X, dim=10)
-X = np.concatenate((tfidf_emb,lda_emb),axis=1)
-
-# train test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
-
-# train
-model = xgb.train(X_train, y_train, output_path=output_path, num_rounds=50)
-
-# evaluate
-classification_report, acc = xgb.evaluate(X_test, y_test, model)
-
-# predict
-predpro, predclass = xgb.predict(X_test, model)
-```
-
-**Bert**
-```
-from textgo.classifier import Bert
-bert = Bert()
-
-# preprocess
-tp = Preprocess(lang='en')
-X = tp.clean(X) # BERT has its own tokenizer, so we don't need to tokenize.
-
-# train test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=3)
-
-# train
-args = { 
-            "max_len":128,                        # max length of input text string
-            "batch_size":8,                       # size of batch
-            "num_labels":len(set(y_train)),       # num of classes
-            "learning_rate":2e-5,                 # learning rate
-            "epochs":10,                          # num of training epochs
-            "evaluation_steps":12,                # evaluate every num of steps
-            "val_metric":"val_loss",              # metric to choose best model, default "val_loss"
-            "val_threshold":0.8,                  # threshold to choose best model
-            "pretrained_model":"path1",           # pretrained model path
-            "output_dir":"path2"                  # output model path/dir
-            } 
-model, tokenizer, training_stats = bert.train(X_train, y_train, args)
-
-# evaluate
-classification_report, acc, loss = bert.evaluate(X_test, y_test, model=model, tokenizer=tokenizer, batch_size=args['batch_size'],max_len=args['max_len'],num_labels=args['num_labels'])
-
-# predict
-predpro, predclass = bert.predict(X_test, model=model, tokenizer=tokenizer, batch_size=args['batch_size'],max_len=args['max_len'],num_labels=args['num_labels'])
+predclass = clf.predict(X_train) 
 ```
 
 ## LICENSE
