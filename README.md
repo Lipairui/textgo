@@ -173,11 +173,11 @@ Output: `[[(0, 'Some men are playing a sport.', 0.828474), (1, 'A man is driving
 ### 5. Text classification
 Train a text classifier just in several lines. Models supported: FastText, TextCNN, TextRNN, TextRCNN, TextRCNN_Att, Bert, XLNet.
 ```
+from textgo import Classifier
+
 # Prepare data
 X = [text1, text2, ... textn]
 y = [label1, label2, ... labeln]
-
-from textgo import Classifier
 
 # load config
 config_path = "./config.ini"  # Include all model parameters
