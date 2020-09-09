@@ -194,5 +194,17 @@ clf.train(X_train, y_train, evaluate_test=False) # If evaluate_test=True, then i
 predclass = clf.predict(X_train) 
 ```
 
+## Resources
+### 1. Pretrained word embeddings
+#### Chinese
+1. 各种中文词向量：https://github.com/Embedding/Chinese-Word-Vectors
+2. 腾讯AI Lab中文词向量：https://ai.tencent.com/ailab/nlp/en/embedding.html
+#### English
+1. GloVe: https://nlp.stanford.edu/projects/glove/
+2. FastText: https://fasttext.cc/docs/en/english-vectors.html
+3. Word2Vec: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
+### 2. Pretrained models
+https://huggingface.co/models 
+
 ## LICENSE
 TextGo is MIT-licensed.
