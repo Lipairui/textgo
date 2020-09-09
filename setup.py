@@ -19,7 +19,7 @@ setuptools.setup(
     install_requires=[ # 依赖列表
         'jieba>=0.42.1',
         'tqdm>=4.46.0',
-        #'transformers>=2.3.0', # not support for python2
+        'transformers>=2.3.0', # not support for python2
         'numpy>=1.16.1',
         'torch>=1.4.0+cu101',
         'pandas>=0.24.0',

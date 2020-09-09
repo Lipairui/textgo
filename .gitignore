@@ -6,4 +6,3 @@ textgo/classifier/output
 textgo/classifier/log
 textgo/classifier/__pycache__
 *.pyc
-/__pycache/

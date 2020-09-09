@@ -6,3 +6,4 @@ pandas>=0.24.0
 gensim>=3.8.3
 scikit_learn>=0.20.4
 xgboost>=0.80
+transformers>=2.3.0
