@@ -28,6 +28,8 @@ class Preprocess():
         self.stopwords = open(stopwords_path).read().strip().split('\n')
         self.stopwords.extend(filter_words) 
         self.stopwords.append(' ')
+        if sys.version_info[0] == 2: # python2
+            self.stopwords = [word.decode('utf-8') for word in self.stopwords] # for python2
         self.stopwords = set(self.stopwords)
 
     def clean(self, texts, drop_space=False):
