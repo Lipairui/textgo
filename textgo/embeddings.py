@@ -48,6 +48,10 @@ class Embeddings():
             self.tokenizer = BertTokenizer.from_pretrained(model_path)
             self.model = BertModel.from_pretrained(model_path)
             return self.model
+        elif method == "SentenceTransformer":
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer(model_path)
+            return self.model
         else:
             self.model = None
             return None

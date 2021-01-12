@@ -9,12 +9,13 @@ logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 logger = logging.getLogger(__file__)
 
 class Preprocess():
-    def __init__(self, lang='zh', filter_words=[], stopwords_path=''):
+    def __init__(self, lang='zh', filter_words=[], stopwords_path='', userdict_path=''):
         '''
         Input:
             lang: string. "zh" for Chinese or "en" for English.
             filter_words: list of strings. Words need to be filtered after tokenization.
             stopwords_path: string. Path of stopwords file.  
+            userdict_path: string. Path of userdict file.
         '''
         self.lang = lang
         if stopwords_path=='':
@@ -22,7 +23,8 @@ class Preprocess():
                 stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_en.txt")
             elif lang == "zh":
                 stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_zh.txt")
-        
+                if userdict_path != '':
+                    jieba.load_userdict(userdict_path)
         self.stopwords = open(stopwords_path).read().strip().split('\n')
         self.stopwords.extend(filter_words) 
         self.stopwords.append(' ')
