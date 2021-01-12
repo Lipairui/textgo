@@ -48,7 +48,8 @@ class Embeddings():
             self.tokenizer = BertTokenizer.from_pretrained(model_path)
             self.model = BertModel.from_pretrained(model_path)
             return self.model
-        elif method == "SentenceTransformer":
+        elif method == "sentence_transformers":
+            # https://github.com/UKPLab/sentence-transformers
             from sentence_transformers import SentenceTransformer
             self.model = SentenceTransformer(model_path)
             return self.model
@@ -190,7 +191,6 @@ class Embeddings():
         if self.model is None and model_path!='':
             self.load_model('bert',model_path)
             
-        print(corpus)
         embeddings = []
         for text in corpus:
             # tokenize and encode
@@ -206,6 +206,21 @@ class Embeddings():
         embeddings = np.array(embeddings)
         return embeddings
 
+    def sentence_transformers(self, corpus, model_path=''):
+        '''Get Sentence-Transformers embeddings.
+           Reference: https://github.com/UKPLab/sentence-transformers
+        Input:    
+            corpus: list of preprocessed strings.   
+            model_path: string. Path of model.
+        Output:    
+            embeddings: array of shape [n_sample, dim]    
+        '''
+        # load model
+        if self.model is None and model_path!='':
+            self.load_model('sentence_transformers',model_path)
+        embeddings = self.model.encode(corpus)
+        return embeddings
+            
     def get_embeddings(self, corpus, ngram_range=(1,1), min_df=1, dim=5, method='tfidf', model_path=''):
         '''Get embeddings according to params.
         Input:
@@ -233,6 +248,8 @@ class Embeddings():
             return self.word2vec(corpus, method=method, model_path=model_path)
         elif self.method == 'bert':
             return self.bert(corpus, model_path=model_path)
+        elif self.method == 'sentence_transformers':
+            return self.sentence_transformers(corpus, model_path=model_path)
 
 if __name__ == '__main__': 
     corpus_en = ['This is the first document.',
