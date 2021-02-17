@@ -3,19 +3,21 @@
 import re
 import os, sys
 import jieba
+import jieba.posseg as pseg
 import logging 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s" 
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT) 
 logger = logging.getLogger(__file__)
 
 class Preprocess():
-    def __init__(self, lang='zh', filter_words=[], stopwords_path='', userdict_path=''):
+    def __init__(self, lang='zh', filter_words=[], stopwords_path='', userdict_path='', filter_pos=[]):
         '''
         Input:
             lang: string. "zh" for Chinese or "en" for English.
             filter_words: list of strings. Words need to be filtered after tokenization.
             stopwords_path: string. Path of stopwords file.  
             userdict_path: string. Path of userdict file.
+            filter_pos: list of POS strings. POS need to be filtered during tokenization.
         '''
         self.lang = lang
         if stopwords_path=='':
@@ -25,12 +27,15 @@ class Preprocess():
                 stopwords_path = os.path.join(os.path.dirname(__file__),"data/stopwords_zh.txt")
                 if userdict_path != '':
                     jieba.load_userdict(userdict_path)
+                    
         self.stopwords = open(stopwords_path).read().strip().split('\n')
         self.stopwords.extend(filter_words) 
         self.stopwords.append(' ')
         if sys.version_info[0] == 2: # python2
             self.stopwords = [word.decode('utf-8') for word in self.stopwords] # for python2
         self.stopwords = set(self.stopwords)
+        self.filter_pos_num = len(filter_pos)
+        self.filter_pos = set(filter_pos)
 
     def clean(self, texts, drop_space=False):
         '''Clean text, including dropping html tags, url, extra space and punctuation 
@@ -49,8 +54,8 @@ class Preprocess():
             # drop url
             url_regrex = u'((http|https)\\:\\/\\/)?[a-zA-Z0-9\\.\\/\\?\\:@\\-_=#]+\\.([a-zA-Z]){2,6}([a-zA-Z0-9\\.\\&\\/\\?\\:@\\-_=#])*'
             text = re.sub(url_regrex,'',text)
-            # only keep Chinese/English/space/numbers
-            text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s^0-9]", " ",text) 
+            # only keep Chinese/English/space/numbers/decimal
+            text = re.sub(u"[^\u4E00-\u9FFF^a-z^A-Z^\s^0-9^\d+(\.\d+)?]", " ",text) 
             if drop_space:
                 # drop any space
                 text = re.sub(u"[\s]{1,}","",text).strip()
@@ -81,7 +86,13 @@ class Preprocess():
                 tokens_list.append(tokens)
         elif self.lang == "zh":
             for text in texts:
-                tokens = list(jieba.cut(text))
+                if self.filter_pos_num==0:
+                    tokens = list(jieba.cut(text))
+                else:
+                    tokens = []
+                    for word, flag in pseg.cut(text):
+                        if flag not in self.filter_pos:
+                            tokens.append(word)
                 if drop_stopwords:
                     tokens = [token for token in tokens if token not in self.stopwords]
                 tokens_list.append(tokens)

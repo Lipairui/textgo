@@ -79,14 +79,14 @@ class Model():
             prior = None
         # Split train/dev/test
         if X2_train is None: # Single sentence Classification
-            if X1_dev is None or y1_dev is None: # train: dev = 8:2 
+            if X1_dev is None or y_dev is None: # train: dev = 8:2 
                 X1_train, X1_dev, y_train, y_dev = train_test_split(X1_train, y_train, random_state=self.args['random_seed'], test_size=0.2)
             if evaluate_test: # train: dev: test = 8:1:1 
                 X1_dev, X1_test, y_dev, y_test = train_test_split(X1_dev, y_dev, random_state=self.args['random_seed'], test_size=0.5)
             X2_dev = None
             X2_test = None
         else: # Sentence pair Classification
-            if X1_dev is None or y1_dev is None: # train: dev = 8:2  
+            if X1_dev is None or y_dev is None: # train: dev = 8:2  
                 X1_train, X1_dev, X2_train, X2_dev, y_train, y_dev = train_test_split(X1_train, X2_train, y_train, random_state=self.args['random_seed'], test_size=0.2) 
             if evaluate_test: # train: dev: test = 8:1:1  
                 X1_dev, X1_test, X2_dev, X2_test, y_dev, y_test = train_test_split(X1_dev, X2_dev, y_dev, random_state=self.args['random_seed'], test_size=0.5)
@@ -230,7 +230,7 @@ class Model():
         b_input_ids = batch[0].to(self.device)
         b_input_mask = batch[1].to(self.device)
         if len(batch)==3: 
-            b_token_type_ids = None
+            b_token_type_ids = None 
             b_labels = batch[2].to(self.device)
         else: # text-pair
             b_token_type_ids = batch[2].to(self.device)
@@ -249,10 +249,11 @@ class Model():
             logits = outputs[0]
             loss = categorical_crossentropy_with_prior(b_labels, logits, prior, self.device, tau=1.0)
         else:
-            loss, logits = model(b_input_ids, 
+            outputs = model(b_input_ids, 
                              token_type_ids=b_token_type_ids, 
                              attention_mask=b_input_mask, 
                              labels=b_labels)
+            loss, logits = outputs.loss, outputs.logits
         # Perform a backward pass to calculate the gradients.
         loss.backward()
         # Clip the norm of the gradients to 1.0.
@@ -311,10 +312,11 @@ class Model():
                 b_token_type_ids = batch[2].to(self.device)
                 b_labels = batch[3].to(self.device)
             with torch.no_grad():
-                loss, logits = model(b_input_ids, 
+                outputs = model(b_input_ids, 
                              token_type_ids=b_token_type_ids, 
                              attention_mask=b_input_mask, 
                              labels=b_labels)
+                loss, logits = outputs.loss, outputs.logits
             total_loss += loss.item()
             # Move logits and labels to CPU
             logits = logits.detach().cpu().numpy()
